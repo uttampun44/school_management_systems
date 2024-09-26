@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClassRoomController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Foundation\Application;
@@ -26,6 +27,9 @@ Route::middleware('auth')->group(function () {
 
     /***************Student************/
     Route::resource('/student', StudentController::class); 
+
+    /*************** classrooms ***********/
+    Route::resource('/class-room', ClassRoomController::class); 
 });
 
 require __DIR__.'/auth.php';

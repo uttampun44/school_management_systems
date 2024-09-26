@@ -7,7 +7,7 @@ import Sidebar from "@/Components/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
 import { hamburger } from "@/store/store";
-import MenuIcon from '@mui/icons-material/Menu';
+import MenuIcon from "@mui/icons-material/Menu";
 
 export default function Authenticated({ header, children }) {
     const user = usePage().props.auth.user;
@@ -25,21 +25,19 @@ export default function Authenticated({ header, children }) {
             <Sidebar onClick={handleHamburger} />
             <div
                 className={cn(
-                    `min-h-screen bg-gray-100 ${toggle ? "ml-28" : "ml-72"} `
+                    `min-h-screen bg-gray-100 ${toggle ? "ml-72" : "ml-28"} `
                 )}
             >
                 <nav className="bg-white border-b border-gray-100">
                     <div className="px-4 sm:px-6 lg:px-8">
                         <div className="flex justify-between items-center h-16">
-
-                        <div
-                    className={cn(
-                        "hamburger w-16 h-auto cursor-pointer"
-                    )}
-                    
-                >
-                   <MenuIcon onClick={handleHamburger} />
-                </div>
+                            <div
+                                className={cn(
+                                    "hamburger w-16 h-auto cursor-pointer"
+                                )}
+                            >
+                                <MenuIcon onClick={handleHamburger} />
+                            </div>
 
                             <div className="hidden sm:flex sm:items-center sm:ms-6">
                                 <div className="ms-3 relative ">

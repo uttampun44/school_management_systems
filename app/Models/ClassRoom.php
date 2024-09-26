@@ -5,7 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Parent extends Model
+class ClassRoom extends Model
 {
+    protected $tables = "classrooms";
+    protected $fillable = ["grade"];
+
+    
     use HasFactory;
 }

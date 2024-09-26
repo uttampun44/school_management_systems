@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\StundentParent;
+use App\Models\ClassRoom;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
-class ParentController extends Controller
+class ClassRoomController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return Inertia::render('Classroom/Index');
     }
 
     /**
@@ -34,7 +35,7 @@ class ParentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(StundentParent $stundentParent)
+    public function show(ClassRoom $classRoom)
     {
         //
     }
@@ -42,7 +43,7 @@ class ParentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(StundentParent $stundentParent)
+    public function edit(ClassRoom $classRoom)
     {
         //
     }
@@ -50,7 +51,7 @@ class ParentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, StundentParent $stundentParent)
+    public function update(Request $request, ClassRoom $classRoom)
     {
         //
     }
@@ -58,7 +59,7 @@ class ParentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(StundentParent $stundentParent)
+    public function destroy(ClassRoom $classRoom)
     {
         //
     }

@@ -1,8 +1,11 @@
 
 import { Link } from "@inertiajs/react";
 import cn from "classnames";
+import { useSelector } from "react-redux";
 
 export default function Sidebar(props) {
+
+    const toggle = useSelector(state => state.school.isToggle)
     const dashboard = {
         name: "Udemy Inter.School",
         image: "/images/dashboardLogo.png",
@@ -11,7 +14,7 @@ export default function Sidebar(props) {
     return (
         <div
             className={cn(
-                "sideBar fixed z-50 h-full bg-main-color py-6 px-5 max-w-72 w-full"
+                `sideBar fixed z-50 h-full bg-main-color py-6 px-5 ${toggle ? 'max-w-32 w-full' : 'max-w-72 w-full'} `
             )}
         >
             <div className="logoText grid justify-items-center border-b-2 relative">
@@ -23,17 +26,6 @@ export default function Sidebar(props) {
                 >
                     {dashboard.name}
                 </h2>
-                <div
-                    className={cn(
-                        "hamburger w-16 h-auto absolute right-0 cursor-pointer"
-                    )}
-                    onClick={props.onClick}
-                >
-                    <img
-                        src="/images/hamburger.png"
-                        className={cn("w-auto h-auto object-contain")}
-                    />
-                </div>
             </div>
 
             <div className={cn("routeLink")}>

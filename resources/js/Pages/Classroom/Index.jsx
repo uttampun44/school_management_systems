@@ -13,7 +13,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 export default function Index({classes}) {
     const [visibility, setVisibility] = useState(false);
-    const { data, setData, post, errors, reset, wasSuccessful } = useForm({
+    const { data, setData, post, errors, reset, wasSuccessful, delete:destroy } = useForm({
         grade: "",
     });
 
@@ -23,8 +23,6 @@ export default function Index({classes}) {
     const handleClose = () => setVisibility(false);
 
     const handleSubmit = (event) => {
-
-        console.log(data.grade)
         if(!data.grade) return
         event.preventDefault();
         post(route("class-room.store"), {
@@ -41,9 +39,7 @@ export default function Index({classes}) {
     const handleDeleteClass = (id) =>{
 
         confirm("Are You ready to Delete");
-        post(route("class-room.delete", id, {
-            method: 'delete'
-        }))
+        destroy(route("class-room.destroy", id))
     }
 
     return (

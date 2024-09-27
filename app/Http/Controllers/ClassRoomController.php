@@ -57,7 +57,7 @@ class ClassRoomController extends Controller
      */
     public function edit(ClassRoom $classRoom)
     {
-        //
+      
     }
 
     /**
@@ -65,7 +65,15 @@ class ClassRoomController extends Controller
      */
     public function update(Request $request, ClassRoom $classRoom)
     {
-        //
+        $request->validate([
+            'gradeUpdate' => 'required|string|max:50'
+          ]);
+
+       $classRoom->update([
+          'grade' => $request->input('gradeUpdate')
+       ]);
+
+       return redirect()->back();
     }
 
     /**

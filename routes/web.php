@@ -26,10 +26,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     /***************Student************/
-    Route::resource('/student', StudentController::class); 
+    Route::resource('/student', StudentController::class);
 
     /*************** classrooms ***********/
-    Route::resource('/class-room', ClassRoomController::class); 
+    Route::resource('/class-room', ClassRoomController::class);
 });
 
 require __DIR__.'/auth.php';

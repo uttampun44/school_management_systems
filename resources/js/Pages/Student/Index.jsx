@@ -41,7 +41,7 @@ export default function Index() {
                                 Address
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                Classroom
+                                Class
                             </th>
                             <th scope="col" className="px-6 py-3">
                                 Section

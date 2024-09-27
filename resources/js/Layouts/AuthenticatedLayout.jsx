@@ -1,8 +1,5 @@
-import { useState } from "react";
 import Dropdown from "@/Components/Dropdown";
-import NavLink from "@/Components/NavLink";
-import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
-import { Link, usePage } from "@inertiajs/react";
+import { usePage } from "@inertiajs/react";
 import Sidebar from "@/Components/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
@@ -25,7 +22,7 @@ export default function Authenticated({ header, children }) {
             <Sidebar onClick={handleHamburger} />
             <div
                 className={cn(
-                    `min-h-screen bg-gray-100 ${toggle ? "ml-72" : "ml-28"} `
+                    `min-h-screen bg-gray-100 ${toggle ? "ml-28" : "ml-72"} `
                 )}
             >
                 <nav className="bg-white border-b border-gray-100">

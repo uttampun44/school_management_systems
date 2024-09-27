@@ -13,7 +13,11 @@ class ClassRoomController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Classroom/Index');
+        $classes  = ClassRoom::select('id','grade')->get();
+
+        // dd($class);
+
+        return Inertia::render('Classroom/Index')->with('classes', $classes);
     }
 
     /**
@@ -29,7 +33,15 @@ class ClassRoomController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+         $request->validate([
+           'grade' => 'required|string|max:50'
+         ]);
+
+        ClassRoom::create([
+            'grade' => $request->input('grade')
+        ]);
+        return redirect()->back();
     }
 
     /**
@@ -61,6 +73,10 @@ class ClassRoomController extends Controller
      */
     public function destroy(ClassRoom $classRoom)
     {
-        //
+
+        if($classRoom){
+            $classRoom->delete();
+            return redirect()->back();
+        }
     }
 }

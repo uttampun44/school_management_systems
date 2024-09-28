@@ -15,8 +15,6 @@ class ClassRoomController extends Controller
     {
         $classes  = ClassRoom::select('id','grade')->get();
 
-        // dd($class);
-
         return Inertia::render('Classroom/Index')->with('classes', $classes);
     }
 

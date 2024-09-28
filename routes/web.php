@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\ClassRoomController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StudentController;
+use App\Models\Role;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -30,6 +32,10 @@ Route::middleware('auth')->group(function () {
 
     /*************** classrooms ***********/
     Route::resource('/class-room', ClassRoomController::class);
+
+    /****************** Role ********************/ 
+    Route::get('/role', [RoleController::class, 'index'])->name('role.index');
+    Route::get('/role/{id}', [RoleController::class, 'edit'])->name('role.edit');
 });
 
 require __DIR__.'/auth.php';

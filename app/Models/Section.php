@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Section extends Model
 {
-    protected $tables = "classroom_sections";
+    protected $table = "classroom_sections";
     protected $fillable = ['sections'];
 
     use HasFactory;

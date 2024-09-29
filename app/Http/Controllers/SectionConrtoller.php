@@ -13,7 +13,7 @@ class SectionConrtoller extends Controller
      */
     public function index()
     {
-        return Inertia::render('Section/Index');
+        return Inertia::render('Section/Index')->with('sections', Section::select('id', 'sections')->get());
     }
 
     /**
@@ -29,7 +29,15 @@ class SectionConrtoller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'section' => 'required|string|max:50'
+        ]);
+
+        Section::create([
+          'sections' => $request->input('section')
+        ]);
+
+        return redirect()->back();
     }
 
     /**
@@ -53,7 +61,16 @@ class SectionConrtoller extends Controller
      */
     public function update(Request $request, Section $section)
     {
-        //
+       
+        $request->validate([
+           'updateSection' => 'required|string|max:50'
+        ]);
+
+        $section->update([
+           'sections' => $request->input('updateSection')  
+        ]);
+
+        return redirect()->back();
     }
 
     /**
@@ -61,6 +78,12 @@ class SectionConrtoller extends Controller
      */
     public function destroy(Section $section)
     {
-        //
+        if(!$section){
+            return;
+        }
+
+        $section->delete();
+
+        return redirect()->back();
     }
 }

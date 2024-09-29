@@ -127,7 +127,7 @@ export default function Sidebar(props) {
                                         "my-3 text-white font-semibold text-sm"
                                     )}
                                 >
-                                    <Link href={route("role.index")}>
+                                    <Link href={route("section.index")}>
                                         Section
                                     </Link>
                                 </li>

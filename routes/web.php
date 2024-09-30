@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SectionConrtoller;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\SubjectController;
 use App\Models\Role;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +40,9 @@ Route::middleware('auth')->group(function () {
     /****************** Role ********************/ 
     Route::get('/role', [RoleController::class, 'index'])->name('role.index');
     Route::get('/role/{id}', [RoleController::class, 'edit'])->name('role.edit');
+
+    /*********************** Subject ******************************/ 
+    Route::resource('subject', SubjectController::class);
 
 });
 

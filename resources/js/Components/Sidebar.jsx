@@ -136,6 +136,15 @@ export default function Sidebar(props) {
                                         "my-3 text-white font-semibold text-sm"
                                     )}
                                 >
+                                    <Link href={route("subject.index")}>
+                                       Subject
+                                    </Link>
+                                </li>
+                                <li
+                                    className={cn(
+                                        "my-3 text-white font-semibold text-sm"
+                                    )}
+                                >
                                     <Link href={route("profile.edit")}>
                                         Profile
                                     </Link>

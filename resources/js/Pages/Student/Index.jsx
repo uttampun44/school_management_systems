@@ -1,9 +1,20 @@
+import Button from "@/Components/Button";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
+import { Link } from "@inertiajs/react";
+import classNames from "classnames";
 
 export default function Index() {
     return (
         <Authenticated>
-            <div className="p-8 overflow-x-auto shadow-md sm:rounded-lg">
+            <div className="p-8 m-8 overflow-x-auto shadow-md sm:rounded-lg">
+               <div className="addStudent bg-blue-600 text-white text-lg font-medium py-2 px-4 rounded-md my-3 w-max">
+               <Link
+                    href={route("student.create")}
+                >
+                    Add Student
+                </Link>
+
+               </div>
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>

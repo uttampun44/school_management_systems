@@ -13,7 +13,7 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Subject/Index');
+        return Inertia::render('Subject/Index')->with('subjects', Subject::select('id', 'subject')->get());
     }
 
     /**
@@ -29,7 +29,16 @@ class SubjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+        'subject' => 'required|string|max:50'
+        ]);
+
+        Subject::create([
+           'subject' => $request->input('subject')
+        ]);
+
+        return redirect()->back();
     }
 
     /**
@@ -53,7 +62,17 @@ class SubjectController extends Controller
      */
     public function update(Request $request, Subject $subject)
     {
-        //
+        // dd($request->all());
+
+        $request->validate([
+            'subjectUpdate' => 'required|string|max:50'
+            ]);
+    
+            $subject->update([
+               'subject' => $request->input('subjectUpdate')
+            ]);
+    
+            return redirect()->back();
     }
 
     /**
@@ -61,6 +80,12 @@ class SubjectController extends Controller
      */
     public function destroy(Subject $subject)
     {
-        //
+        if($subject)
+        {
+           
+            $subject->delete();
+            return redirect()->back();
+        }
+
     }
 }

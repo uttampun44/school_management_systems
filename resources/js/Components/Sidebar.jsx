@@ -4,12 +4,18 @@ import { useSelector } from "react-redux";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import EngineeringIcon from "@mui/icons-material/Engineering";
 import FaceIcon from "@mui/icons-material/Face";
-import SchoolIcon from '@mui/icons-material/School';
-
-
+import SchoolIcon from "@mui/icons-material/School";
+import useToggle from "@/hooks/UseToggle";
+import classNames from "classnames";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 export default function Sidebar(props) {
     const toggle = useSelector((state) => state.school.isToggle);
+
+    const [isStudent, toggleStudent] = useToggle();
+    const [isTeacher, toggleTeacher] = useToggle();
+
     const dashboard = {
         name: "Udemy Inter.School",
         image: "/images/dashboardLogo.png",
@@ -22,7 +28,7 @@ export default function Sidebar(props) {
                     className={cn(
                         `sideBar fixed z-50 h-full bg-main-color py-6 px-5 max-w-32 w-full `
                     )}
-                    >
+                >
                     <aside>
                         <div
                             className={cn(
@@ -58,9 +64,11 @@ export default function Sidebar(props) {
                                 </li>
                                 <li>
                                     <Link href={route("class-room.index")}>
-                                       <SchoolIcon  className={cn("text-white")}
-                                            style={{ fontSize: "36px" }}/>
-                                     </Link>
+                                        <SchoolIcon
+                                            className={cn("text-white")}
+                                            style={{ fontSize: "36px" }}
+                                        />
+                                    </Link>
                                 </li>
                                 <li>
                                     <Link href={route("profile.edit")}>
@@ -73,7 +81,6 @@ export default function Sidebar(props) {
                             </ul>
                         </div>
                     </aside>
-
                 </div>
             ) : (
                 <div
@@ -81,7 +88,6 @@ export default function Sidebar(props) {
                         `sideBar fixed z-50 h-full bg-main-color py-6 px-5 max-w-72 w-full `
                     )}
                 >
-
                     <aside>
                         <div className="logoText grid justify-items-center border-b-2 relative">
                             <img src={dashboard.image} alt={dashboard.name} />
@@ -98,9 +104,13 @@ export default function Sidebar(props) {
                             <ul>
                                 <li
                                     className={cn(
-                                        "my-3 text-white font-semibold text-sm"
+                                        "my-3 text-white flex gap-x-2 items-center font-semibold text-sm"
                                     )}
                                 >
+                                    <DashboardIcon
+                                        className={cn("text-white")}
+                                        style={{ fontSize: "24px" }}
+                                    />
                                     <Link href={route("dashboard")}>
                                         Dashboard
                                     </Link>
@@ -108,55 +118,104 @@ export default function Sidebar(props) {
 
                                 <li
                                     className={cn(
-                                        "my-3 text-white font-semibold text-sm"
+                                        "my-3 text-white flex gap-x-2 items-center font-semibold text-sm cursor-pointer"
                                     )}
                                 >
-                                    <Link href={route("student.index")}>
-                                        Student
-                                    </Link>
+                                    <FaceIcon
+                                        className={cn("text-white")}
+                                        style={{ fontSize: "24px" }}
+                                    />
+                                    <span onClick={toggleStudent}>
+                                        Student Management
+                                    </span>
                                 </li>
-                                <li  className={cn(
-                                        "my-3 text-white font-semibold text-sm"
-                                    )}>
-                                    <Link href={route("class-room.index")}>
-                                        Class
-                                    </Link>
-                                </li>
+
+                                <ul
+                                    className={classNames(
+                                        `${isStudent ? "block" : "hidden"}`
+                                    )}
+                                >
+                                    <li
+                                        className={cn(
+                                            "my-3 text-white font-semibold text-sm"
+                                        )}
+                                    >
+                                        <Link href={route("student.index")}>
+                                            Student
+                                        </Link>
+                                    </li>
+                                    <li
+                                        className={cn(
+                                            "my-3 text-white font-semibold text-sm"
+                                        )}
+                                    >
+                                        <Link href={route("class-room.index")}>
+                                            Class
+                                        </Link>
+                                    </li>
+                                    <li
+                                        className={cn(
+                                            "my-3 text-white font-semibold text-sm"
+                                        )}
+                                    >
+                                        <Link href={route("section.index")}>
+                                            Section
+                                        </Link>
+                                    </li>
+                                    <li
+                                        className={cn(
+                                            "my-3 text-white font-semibold text-sm"
+                                        )}
+                                    >
+                                        <Link href={route("subject.index")}>
+                                            Subject
+                                        </Link>
+                                    </li>
+                                </ul>
+                                    <li
+                                        className={cn(
+                                            "my-3 text-white flex gap-x-2 items-center font-semibold text-sm cursor-pointer"
+                                        )}
+                                    >
+                                        <FaceIcon
+                                            className={cn("text-white")}
+                                            style={{ fontSize: "24px" }}
+                                        />
+                                        <span onClick={toggleTeacher}>
+                                            Teachers Management
+                                        </span>
+                                    </li>
+                                <ul className={cn(`${isTeacher ? 'block' : 'hidden'}`)}>
+                                   <li  className={cn(
+                                        "my-3 text-white flex gap-x-3 items-center font-semibold text-sm"
+                                    )}> 
+                                <Link href={route("profile.edit")}>
+                                    Teacher
+                                </Link></li>
+                                </ul>    
                                 <li
                                     className={cn(
-                                        "my-3 text-white font-semibold text-sm"
+                                        "my-3 text-white flex gap-x-3 items-center font-semibold text-sm"
                                     )}
                                 >
-                                    <Link href={route("section.index")}>
-                                        Section
-                                    </Link>
-                                </li>
-                                <li
-                                    className={cn(
-                                        "my-3 text-white font-semibold text-sm"
-                                    )}
-                                >
-                                    <Link href={route("subject.index")}>
-                                       Subject
-                                    </Link>
-                                </li>
-                                <li
-                                    className={cn(
-                                        "my-3 text-white font-semibold text-sm"
-                                    )}
-                                >
+                                    <AccountCircleIcon
+                                        className={cn("text-white")}
+                                        style={{ fontSize: "24px" }}
+                                    />
                                     <Link href={route("profile.edit")}>
                                         Profile
                                     </Link>
                                 </li>
                                 <li
                                     className={cn(
-                                        "my-3 text-white font-semibold text-sm"
+                                        "my-3 text-white flex gap-x-3 items-center font-semibold text-sm"
                                     )}
                                 >
-                                    <Link href={route("role.index")}>
-                                        Role
-                                    </Link>
+                                    <AccountBoxIcon
+                                        className={cn("text-white")}
+                                        style={{ fontSize: "24px" }}
+                                    />
+                                    <Link href={route("role.index")}>Role</Link>
                                 </li>
                             </ul>
                         </div>

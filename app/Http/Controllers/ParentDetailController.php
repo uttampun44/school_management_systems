@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\StundentParent;
+use App\Models\ParentDetail;
 use Illuminate\Http\Request;
 
-class ParentController extends Controller
+class ParentDetailController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class ParentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(StundentParent $stundentParent)
+    public function show(ParentDetail $parentDetail)
     {
         //
     }
@@ -42,7 +42,7 @@ class ParentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(StundentParent $stundentParent)
+    public function edit(ParentDetail $parentDetail)
     {
         //
     }
@@ -50,7 +50,7 @@ class ParentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, StundentParent $stundentParent)
+    public function update(Request $request, ParentDetail $parentDetail)
     {
         //
     }
@@ -58,7 +58,7 @@ class ParentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(StundentParent $stundentParent)
+    public function destroy(ParentDetail $parentDetail)
     {
         //
     }

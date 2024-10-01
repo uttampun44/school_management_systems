@@ -3,10 +3,12 @@ import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Link } from "@inertiajs/react";
 import classNames from "classnames";
 
-export default function Index() {
+export default function Index({students}) {
+
+    console.log(students.map((student, index) => student.full_name))
     return (
         <Authenticated>
-            <div className="p-8 m-8 overflow-x-auto shadow-md sm:rounded-lg">
+            <div className={classNames("p-8 m-8 overflow-x-auto shadow-md sm:rounded-lg")}>
                <div className="addStudent bg-blue-600 text-white text-lg font-medium py-2 px-4 rounded-md my-3 w-max">
                <Link
                     href={route("student.create")}
@@ -60,25 +62,24 @@ export default function Index() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                            <th
+                       {
+                         students.map((student, index) => {
+                            <tr key={index} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                            <td
                                 scope="row"
-                                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                className="px-6 py-4 font-medium "
                             >
-                                Apple MacBook Pro 17"
-                            </th>
-                            <td className="px-6 py-4">Silver</td>
+                             {index+1}
+                            </td>
+                            <td className="px-6 py-4">{student}</td>
                             <td className="px-6 py-4">Laptop</td>
                             <td className="px-6 py-4">$2999</td>
                             <td className="px-6 py-4">
-                                <a
-                                    href="#"
-                                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                                >
-                                    Edit
-                                </a>
+                              
                             </td>
                         </tr>
+                         })
+                       }
                     </tbody>
                 </table>
             </div>

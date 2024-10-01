@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Student extends Model
@@ -11,18 +12,18 @@ class Student extends Model
     protected $table = "student_details";
 
     protected $fillable = ["full_name", "phone_number", "date_of_birth",
-     "student_class", "photo", "fathers_name", "father_occupation", "mother_name", "mother_occupation",
-    "address", "classroom_id", "section_id" ]; 
+      "photo", "fathers_name", "father_occupation", "mothers_name", "mother_occupation",
+    "address", "classroom_id", "section_id", 'user_id' ]; 
 
     use HasFactory;
 
-    public function class():HasOne
+    public function class():BelongsTo
     {
-        return $this->hasOne(ClassRoom::class);
+        return $this->belongsTo(ClassRoom::class, 'classroom_id');
     }
 
-    public function section():HasOne
+    public function section():BelongsTo
     {
-        return $this->hasOne(Section::class);
+        return $this->belongsTo(Section::class, 'section_id');
     }
 }

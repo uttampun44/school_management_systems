@@ -133,7 +133,8 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        //
+ 
+       return Inertia::render('Student/Edit')->with('studentEdit', $student);
     }
 
     /**

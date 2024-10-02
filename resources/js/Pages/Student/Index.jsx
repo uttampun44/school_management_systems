@@ -1,12 +1,15 @@
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import classNames from "classnames";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
-
 export default function Index({ students }) {
-    console.log(students.map((student, index) => student));
+   
+    const handleDeleteStudent = (studentId) => {
+        confirm("Are You confirm to delete !");
+        router.delete(route("student.destroy", studentId));
+    };
     return (
         <Authenticated>
             <div
@@ -25,6 +28,9 @@ export default function Index({ students }) {
                             </th>
                             <th scope="col" className="px-6 py-3">
                                 Full Name
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Email
                             </th>
                             <th scope="col" className="px-6 py-3">
                                 Phone Number
@@ -80,9 +86,12 @@ export default function Index({ students }) {
                                 <td className="px-6 py-4">
                                     {student.full_name}
                                 </td>
-                                <td className="px-6 py-4">
+                              
+                                    <td className="px-6 py-4">
+                                        {student.user.email}
+                                    </td>
                                     {student.phone_number}
-                                </td>
+                              
                                 <td className="px-6 py-4">
                                     {student.date_of_birth}
                                 </td>
@@ -114,19 +123,23 @@ export default function Index({ students }) {
                                     {student.section.sections}
                                 </td>
                                 <td className="px-6 py-4">
-                                   
-                                   <Link href={route('student.edit', student.id)}> <EditNoteIcon
-                                        style={{
-                                            fontSize: "30px",
-                                            color: "blue",
-                                            cursor: "pointer",
-                                        }}
-                                    /></Link>
+                                    <Link
+                                        href={route("student.edit", student.id)}
+                                    >
+                                        {" "}
+                                        <EditNoteIcon
+                                            style={{
+                                                fontSize: "30px",
+                                                color: "blue",
+                                                cursor: "pointer",
+                                            }}
+                                        />
+                                    </Link>
                                 </td>
                                 <td className={classNames("px-6 py-3")}>
                                     <DeleteForeverIcon
                                         onClick={() =>
-                                            handleDeleteSection(student.id)
+                                            handleDeleteStudent(student.id)
                                         }
                                         style={{
                                             fontSize: "30px",

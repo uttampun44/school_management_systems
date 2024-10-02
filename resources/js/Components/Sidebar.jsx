@@ -189,7 +189,7 @@ export default function Sidebar(props) {
                                    <li  className={cn(
                                         "my-3 text-white flex gap-x-3 items-center font-semibold text-sm"
                                     )}> 
-                                <Link href={route("profile.edit")}>
+                                <Link href={route("teacher.index")}>
                                     Teacher
                                 </Link></li>
                                 </ul>    

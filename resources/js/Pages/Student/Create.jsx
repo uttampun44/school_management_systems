@@ -104,6 +104,7 @@ export default function Create({ classes, section, role }) {
                         <div className={classNames("date_of_birth")}>
                             <InputLabel value="Date Of Birth" />
                             <TextInput
+                            type="date"
                                 className={classNames("p-1 rounded-md w-full")}
                                 name="date_of_birth"
                                 value={data.date_of_birth}
@@ -139,7 +140,7 @@ export default function Create({ classes, section, role }) {
                                     "p-1 rounded- w-full border-2 rounded-md"
                                 )}
                                 name="fathername"
-                                data={data.fathername}
+                                value={data.fathername}
                                 onChange={(e) =>
                                     setData("fathername", e.target.value)
                                 }
@@ -152,7 +153,7 @@ export default function Create({ classes, section, role }) {
                                     "p-1 rounded- w-full border-2 rounded-md"
                                 )}
                                 name="fatheroccupation"
-                                data={data.fatheroccupation}
+                                value={data.fatheroccupation}
                                 onChange={(e) =>
                                     setData("fatheroccupation", e.target.value)
                                 }
@@ -201,6 +202,7 @@ export default function Create({ classes, section, role }) {
                         </div>
 
                         <div className={classNames("class")}>
+                        <InputLabel value="Class" />
                             <select
                                 className={classNames(
                                     "p-1 rounded- w-full border-2 rounded-md"
@@ -221,6 +223,7 @@ export default function Create({ classes, section, role }) {
                         </div>
 
                         <div className={classNames("section")}>
+                        <InputLabel value="Section" />
                             <select
                                 className={classNames(
                                     "p-1 rounded- w-full border-2 rounded-md"
@@ -241,6 +244,7 @@ export default function Create({ classes, section, role }) {
                         </div>
 
                         <div className={classNames("role")}>
+                        <InputLabel value="Role" />
                             <select
                                 className={classNames(
                                     "p-1 rounded- w-full border-2 rounded-md"
@@ -259,6 +263,7 @@ export default function Create({ classes, section, role }) {
                                 ))}
                             </select>
                         </div>
+
                     </div>
 
                     <div

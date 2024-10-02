@@ -6,40 +6,35 @@ import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Link, useForm } from "@inertiajs/react";
 import classNames from "classnames";
 
-export default function Create({ classes, section, role }) {
+export default function Edit({ student, classes, section, user }) {
+    console.log(student);
+
     const {
         errors,
         data,
         setData,
-        post: store,
+        put: update,
         reset,
         progress,
     } = useForm({
-        fullname: "",
-        email: "",
-        password: "",
-        phonenumber: "",
-        date_of_birth: "",
-        photo: null,
-        fathername: "",
-        fatheroccupation: "",
-        mothername: "",
-        motheroccupation: "",
-        address: "",
-        class: "",
-        section: "",
-        role: "",
+        fullname: student.full_name,
+        phonenumber: student.phone_number,
+        email: user.email,
+        password: user.password,
+        date_of_birth: student.date_of_birth,
+        photo: "",
+        fathername: student.fathers_name,
+        fatheroccupation: student.father_occupation,
+        mothername: student.mothers_name,
+        motheroccupation: student.mother_occupation,
+        address: student.address,
+        class: student.classroom_id,
+        section: student.section_id,
     });
-    const handleSubmit = (event) => {
-        console.log(data);
 
-        event.preventDefault();
-      
-        store(
-            route("student.store", data, {
-                forceFormData: true,
-            })
-        );
+    const handleSubmit = (event) => {
+        event.preventDefault()
+      update(route('student.update', student.id))
     };
 
     return (
@@ -65,6 +60,7 @@ export default function Create({ classes, section, role }) {
                                 }
                             />
                         </div>
+
                         <div className={classNames("email")}>
                             <InputLabel value="Email" />
                             <TextInput
@@ -90,6 +86,7 @@ export default function Create({ classes, section, role }) {
                                 }
                             />
                         </div>
+
                         <div className={classNames("phoneNumber")}>
                             <InputLabel value="Phone Number" />
                             <TextInput
@@ -104,7 +101,6 @@ export default function Create({ classes, section, role }) {
                         <div className={classNames("date_of_birth")}>
                             <InputLabel value="Date Of Birth" />
                             <TextInput
-                            type="date"
                                 className={classNames("p-1 rounded-md w-full")}
                                 name="date_of_birth"
                                 value={data.date_of_birth}
@@ -121,7 +117,7 @@ export default function Create({ classes, section, role }) {
                                     "p-1 rounded- w-full border-2 rounded-md"
                                 )}
                                 name="photo"
-                                // value={data.photo}
+                                value={data.photo}
                                 onChange={(e) =>
                                     setData("photo", e.target.files[0])
                                 }
@@ -131,6 +127,8 @@ export default function Create({ classes, section, role }) {
                                     {progress.percentage}%
                                 </progress>
                             )}
+
+                            <img src={`/assets/uploads/${student.photo}`} alt={student.photo} />
                         </div>
 
                         <div className={classNames("fatherName")}>
@@ -202,7 +200,7 @@ export default function Create({ classes, section, role }) {
                         </div>
 
                         <div className={classNames("class")}>
-                        <InputLabel value="Class" />
+                            <InputLabel value="Class" />
                             <select
                                 className={classNames(
                                     "p-1 rounded- w-full border-2 rounded-md"
@@ -215,7 +213,7 @@ export default function Create({ classes, section, role }) {
                             >
                                 <option>Select Class</option>
                                 {classes.map((classItem, index) => (
-                                    <option key={index} value={classItem.id}>
+                                    <option key={index} value={classItem.id} >
                                         {classItem.grade}
                                     </option>
                                 ))}
@@ -223,7 +221,7 @@ export default function Create({ classes, section, role }) {
                         </div>
 
                         <div className={classNames("section")}>
-                        <InputLabel value="Section" />
+                            <InputLabel value="Section" />
                             <select
                                 className={classNames(
                                     "p-1 rounded- w-full border-2 rounded-md"
@@ -236,34 +234,16 @@ export default function Create({ classes, section, role }) {
                             >
                                 <option>Select Section</option>
                                 {section.map((sectionItem, index) => (
-                                    <option value={sectionItem.id} key={index}>
+                                    <option
+                                        value={
+                                            sectionItem.id }
+                                        key={index}
+                                    >
                                         {sectionItem.sections}
                                     </option>
                                 ))}
                             </select>
                         </div>
-
-                        <div className={classNames("role")}>
-                        <InputLabel value="Role" />
-                            <select
-                                className={classNames(
-                                    "p-1 rounded- w-full border-2 rounded-md"
-                                )}
-                                name="role"
-                                value={data.role}
-                                onChange={(e) =>
-                                    setData("role", e.target.value)
-                                }
-                            >
-                                <option>Select Section</option>
-                                {role.map((role, index) => (
-                                    <option value={role.id} key={index}>
-                                        {role.role_name}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-
                     </div>
 
                     <div
@@ -273,7 +253,7 @@ export default function Create({ classes, section, role }) {
                     >
                         <Button
                             type="submit"
-                            name="Add Student"
+                            name="Update Student"
                             classname={classNames(
                                 "bg-blue-600 w-max text-white text-lg font-medium py-2 px-4 rounded-md my-3"
                             )}

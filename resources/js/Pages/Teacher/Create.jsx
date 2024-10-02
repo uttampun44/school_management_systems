@@ -6,7 +6,7 @@ import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Link, useForm } from "@inertiajs/react";
 import classNames from "classnames";
 
-export default function Create({ classes, section, role }) {
+export default function Create() {
     const {
         errors,
         data,
@@ -29,14 +29,16 @@ export default function Create({ classes, section, role }) {
         class: "",
         section: "",
         role: "",
+        gender: ""
     });
+
     const handleSubmit = (event) => {
         console.log(data);
 
         event.preventDefault();
       
         store(
-            route("student.store", data, {
+            route("teacher.store", data, {
                 forceFormData: true,
             })
         );
@@ -50,7 +52,7 @@ export default function Create({ classes, section, role }) {
                 )}
             >
                 <h1 className={classNames("text-xl font-sans font-bold")}>
-                    Create Student
+                    Create Teacher
                 </h1>
                 <form onSubmit={handleSubmit}>
                     <div className={classNames("grid grid-cols-3 gap-4 my-2")}>
@@ -104,7 +106,6 @@ export default function Create({ classes, section, role }) {
                         <div className={classNames("date_of_birth")}>
                             <InputLabel value="Date Of Birth" />
                             <TextInput
-                            type="date"
                                 className={classNames("p-1 rounded-md w-full")}
                                 name="date_of_birth"
                                 value={data.date_of_birth}
@@ -202,6 +203,7 @@ export default function Create({ classes, section, role }) {
                         </div>
 
                         <div className={classNames("class")}>
+
                         <InputLabel value="Class" />
                             <select
                                 className={classNames(
@@ -214,11 +216,11 @@ export default function Create({ classes, section, role }) {
                                 }
                             >
                                 <option>Select Class</option>
-                                {classes.map((classItem, index) => (
-                                    <option key={index} value={classItem.id}>
-                                        {classItem.grade}
-                                    </option>
-                                ))}
+                                {/* {classes.map((classItem, index) => (
+                                <option key={index} value={classItem.id}>
+                                    {classItem.grade}
+                                </option>
+                            ))} */}
                             </select>
                         </div>
 
@@ -235,11 +237,11 @@ export default function Create({ classes, section, role }) {
                                 }
                             >
                                 <option>Select Section</option>
-                                {section.map((sectionItem, index) => (
-                                    <option value={sectionItem.id} key={index}>
-                                        {sectionItem.sections}
-                                    </option>
-                                ))}
+                                {/* {section.map((sectionItem, index) => (
+                                <option value={sectionItem.id} key={index}>
+                                    {sectionItem.sections}
+                                </option>
+                            ))} */}
                             </select>
                         </div>
 
@@ -256,14 +258,30 @@ export default function Create({ classes, section, role }) {
                                 }
                             >
                                 <option>Select Section</option>
-                                {role.map((role, index) => (
-                                    <option value={role.id} key={index}>
-                                        {role.role_name}
-                                    </option>
-                                ))}
+                                {/* {role.map((role, index) => (
+                                <option value={role.id} key={index}>
+                                    {role.role_name}
+                                </option>
+                            ))} */}
                             </select>
                         </div>
 
+                        <div className={classNames("gender")}>
+                        <InputLabel value="Gender" />
+                            <select
+                                className={classNames(
+                                    "p-1 rounded- w-full border-2 rounded-md"
+                                )}
+                                name="gender"
+                                value={data.gender}
+                                onChange={(e) =>
+                                    setData("gender", e.target.value)
+                                }
+                            >
+                                <option>Select Section</option>
+                               
+                            </select>
+                        </div>
                     </div>
 
                     <div
@@ -273,12 +291,12 @@ export default function Create({ classes, section, role }) {
                     >
                         <Button
                             type="submit"
-                            name="Add Student"
+                            name="Add Teacher"
                             classname={classNames(
                                 "bg-blue-600 w-max text-white text-lg font-medium py-2 px-4 rounded-md my-3"
                             )}
                         />
-                        <Link href={route("student.index")}>
+                        <Link href={route("teacher.index")}>
                             <DangerButton
                                 className={classNames(
                                     "w-max text-white !text-lg font-medium  rounded-md"

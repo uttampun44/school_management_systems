@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Teacher;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class TeacherController extends Controller
 {
@@ -12,7 +13,7 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Teacher/Index');
     }
 
     /**
@@ -20,7 +21,7 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Teacher/Create');
     }
 
     /**

@@ -23,39 +23,31 @@ export default function Index(){
                             Full Name
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Email
+                            Phone Number
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Phone Number
+                            Gender
                         </th>
                         <th scope="col" className="px-6 py-3">
                             Date Of Birth
                         </th>
 
                         <th scope="col" className="px-6 py-3">
-                            Photo
+                           Address
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Fathers Name
+                            Qualification
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Fathers Occupation
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Mothers Name
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Mothers Occupation
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Address
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Class
+                            Class Incharge
                         </th>
                         <th scope="col" className="px-6 py-3">
                             Section
                         </th>
+                        <th scope="col" className="px-6 py-3">
+                            Subject
+                        </th>
+                        
                         <th scope="col" className="px-6 py-3">
                             Edit
                         </th>

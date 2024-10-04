@@ -8,6 +8,7 @@ use App\Models\Section;
 use App\Models\Subject;
 use App\Models\Teacher;
 use App\Models\User;
+use App\Models\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -21,7 +22,20 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Teacher/Index');
+        $teachersDetails = Teacher::with([
+            'class' => function ($query) {
+                return $query->select('id','grade');
+            },
+            'section' => function ($query) {
+                return $query->select('id','sections');
+            },
+            'subject' => function ($query) {
+                return $query->select('id','subject');
+            }
+        ])->select('id', 'full_name', 'phone_number', 'gender', 'date_of_birth', 'address', 'photo', 'qualification', 'class_id', 'section_id', 'subject_id')->paginate(10);
+
+
+        return Inertia::render('Teacher/Index')->with('teacherdetails', $teachersDetails);
     }
 
     /**
@@ -29,7 +43,7 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        $role = Role::where('role_name','teacher')->select('id', 'role_name')->get();
+        $role = Role::where('role_name', 'teacher')->select('id', 'role_name')->get();
         $classes = ClassRoom::select('id', 'grade')->get();
         $subject = Subject::select('id', 'subject')->get();
         $section = Section::select('id', 'sections')->get();
@@ -47,52 +61,65 @@ class TeacherController extends Controller
      */
     public function store(Request $request)
     {
+
+
+
         DB::beginTransaction();
 
         try {
             $request->validate([
                 'fullname' => 'required|string|max:50',
                 'email' => 'required|string|email',
-                'password' => 'required|string|password',
-                'phone' => 'required|string|max:20',
+                'password' => 'required',
+                'phonenumber' => 'required|string|max:20',
                 'gender' => 'required',
+                'date_of_birth' => 'required',
                 'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'qualification' => 'required',
-                 'class' => 'required',
-                 'section' => 'required',
-                 'subject' => 'required',
-              ]);
-      
-              $user = User::create([
-                  'name' => $request->input('name'),
-                  'email' => $request->input('email'),
-                  'password' => Hash::make($request->input('password'))
-              ]);
-      
-              Role::create([
-                'role_id' => $request->input('role'),
-                'user_id' => $user->id
-              ]);
-      
-              User::create([
-                  'full_name' => $request->input('full_name'),
-                  'phone_number' => $request->input('phone_number'),
-                  'gender' => $request->input('date_of_birth'),
-                   'date_of_birth' => $request->input('date_of_birth'),
-                   'address' => $request->input('address'),
-                   'photo' => $request->input('photo'),
-                   'qualification' => $request->input('qualification'),
-                   'class_id' => $request->input('class'),
-                   'section_id' => $request->input('section'),
-                   'subject_id' => $request->input('subject') 
-              ]);
-      
-              return redirect()->back();
+                'class' => 'required',
+                'section' => 'required',
+                'subject' => 'required',
+                'user_role' => 'required'
+            ]);
 
-           DB::rollBack();
+            $user = User::create([
+                'name' => $request->input('fullname'),
+                'email' => $request->input('email'),
+                'password' => Hash::make($request->input('password'))
+            ]);
+
+            UserRole::create([
+                'role_id' => $request->input('user_role'),
+                'user_id' => $user->id
+            ]);
+
+            $photoPath = null;
+            if ($request->hasFile('photo')) {
+                $photoPath = $request->file('photo')->store('uploads/teachers', 'public');
+            }
+
+            Teacher::create([
+                'full_name' => $request->input('fullname'),
+                'phone_number' => $request->input('phonenumber'),
+                'gender' => $request->input('gender'),
+                'date_of_birth' => $request->input('date_of_birth'),
+                'address' => $request->input('address'),
+                'photo' => $photoPath,
+                'qualification' => $request->input('qualification'),
+                'class_id' => $request->input('class'),
+                'section_id' => $request->input('section'),
+                'subject_id' => $request->input('subject'),
+                'user_id' => $request->input('user_role')
+            ]);
+
+
+            DB::commit();
+
+            return redirect()->route('teacher.index')->with('success', 'Teacher created successfully.');
         } catch (\Throwable $th) {
-            Log::error($th->getMessage());
+            Log::error('Error occurred while creating teacher: ' . $th->getMessage());
             DB::rollBack();
+            return redirect()->back()->withErrors(['error' => 'An error occurred while saving.'])->withInput();
         }
     }
 
@@ -109,7 +136,10 @@ class TeacherController extends Controller
      */
     public function edit(Teacher $teacher)
     {
-        //
+        $teacher = User::find($teacher->user_id);
+     return Inertia::render('Teacher/Edit')->with([
+        'teacher' => $teacher
+     ]);
     }
 
     /**
@@ -125,11 +155,10 @@ class TeacherController extends Controller
      */
     public function destroy(Teacher $teacher)
     {
-        if($teacher)
-        {
-           $teacher->delete();
+        if ($teacher) {
+            $teacher->delete();
 
-           return redirect()->back();
+            return redirect()->back();
         }
     }
 }

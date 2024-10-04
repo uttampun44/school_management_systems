@@ -7,7 +7,7 @@ import { Link, useForm } from "@inertiajs/react";
 import classNames from "classnames";
 
 export default function Create({ role, classes, subject, section }) {
-    
+  
     const {
         errors,
         data,
@@ -27,8 +27,8 @@ export default function Create({ role, classes, subject, section }) {
         qualification: "",
         class: "",
         section: "",
-        role: "",
         subject: "",
+        user_role: role[0].id,
     });
 
     const handleSubmit = (event) => {
@@ -36,8 +36,7 @@ export default function Create({ role, classes, subject, section }) {
 
         event.preventDefault();
 
-        store(
-            route("teacher.store", data, {
+        store(route("teacher.store", data, {
                 forceFormData: true,
             })
         );
@@ -109,10 +108,10 @@ export default function Create({ role, classes, subject, section }) {
                                 className={classNames(
                                     "p-1 rounded- w-full border-2 rounded-md"
                                 )}
-                                name="class"
+                                name="gender"
                                 value={data.gender}
                                 onChange={(e) =>
-                                    setData("class", e.target.value)
+                                    setData("gender", e.target.value)
                                 }
                             >
                                 <option>Select Class</option>
@@ -123,7 +122,7 @@ export default function Create({ role, classes, subject, section }) {
                         <div className={classNames("date_of_birth")}>
                             <InputLabel value="Date Of Birth" />
                             <TextInput
-                                type="date"
+                                type="text"
                                 className={classNames("p-1 rounded-md w-full")}
                                 name="date_of_birth"
                                 value={data.date_of_birth}
@@ -227,21 +226,22 @@ export default function Create({ role, classes, subject, section }) {
                             </select>
                         </div>
 
-                        {role.map((roleItem, index) => (
-                            <div className={classNames("role")} key={index}>
-                                <InputLabel value="Role" />
+                    
+                            <div className={classNames("role hidden")}>
+                                 <InputLabel value="User Role" />
                                 <TextInput
+                                type="text"
                                     className={classNames(
                                         "p-1 rounded- w-full border-2 rounded-md"
                                     )}
-                                    name="role"
-                                    value={roleItem.role_name}
+                                    name="user_role"
+                                    value={data.user_role}
                                     onChange={(e) =>
-                                        setData("role", e.target.value)
+                                        setData("user_role", e.target.value)
                                     }
                                 />
                             </div>
-                        ))}
+                     
 
                         <div className={classNames("subject")}>
                             <InputLabel value="Subject" />
@@ -249,7 +249,7 @@ export default function Create({ role, classes, subject, section }) {
                                 className={classNames(
                                     "p-1 rounded- w-full border-2 rounded-md"
                                 )}
-                                name="role"
+                                name="subject"
                                 value={data.subject}
                                 onChange={(e) =>
                                     setData("subject", e.target.value)

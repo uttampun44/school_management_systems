@@ -6,7 +6,8 @@ import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Link, useForm } from "@inertiajs/react";
 import classNames from "classnames";
 
-export default function Create() {
+export default function Create({ role, classes, subject, section }) {
+  
     const {
         errors,
         data,
@@ -19,26 +20,23 @@ export default function Create() {
         email: "",
         password: "",
         phonenumber: "",
+        gender: "",
         date_of_birth: "",
-        photo: null,
-        fathername: "",
-        fatheroccupation: "",
-        mothername: "",
-        motheroccupation: "",
         address: "",
+        photo: null,
+        qualification: "",
         class: "",
         section: "",
-        role: "",
-        gender: ""
+        subject: "",
+        user_role: role[0].id,
     });
 
     const handleSubmit = (event) => {
         console.log(data);
 
         event.preventDefault();
-      
-        store(
-            route("teacher.store", data, {
+
+        store(route("teacher.store", data, {
                 forceFormData: true,
             })
         );
@@ -103,14 +101,46 @@ export default function Create() {
                                 }
                             />
                         </div>
+
+                        <div className={classNames("gender")}>
+                            <InputLabel value="Gender" />
+                            <select
+                                className={classNames(
+                                    "p-1 rounded- w-full border-2 rounded-md"
+                                )}
+                                name="gender"
+                                value={data.gender}
+                                onChange={(e) =>
+                                    setData("gender", e.target.value)
+                                }
+                            >
+                                <option>Select Class</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
                         <div className={classNames("date_of_birth")}>
                             <InputLabel value="Date Of Birth" />
                             <TextInput
+                                type="text"
                                 className={classNames("p-1 rounded-md w-full")}
                                 name="date_of_birth"
                                 value={data.date_of_birth}
                                 onChange={(e) =>
                                     setData("date_of_birth", e.target.value)
+                                }
+                            />
+                        </div>
+                        <div className={classNames("address")}>
+                            <InputLabel value="Address" />
+                            <TextInput
+                                className={classNames(
+                                    "p-1 rounded- w-full border-2 rounded-md"
+                                )}
+                                name="address"
+                                value={data.address}
+                                onChange={(e) =>
+                                    setData("address", e.target.value)
                                 }
                             />
                         </div>
@@ -135,76 +165,27 @@ export default function Create() {
                         </div>
 
                         <div className={classNames("fatherName")}>
-                            <InputLabel value="Father name" />
-                            <TextInput
-                                className={classNames(
-                                    "p-1 rounded- w-full border-2 rounded-md"
-                                )}
-                                name="fathername"
-                                value={data.fathername}
-                                onChange={(e) =>
-                                    setData("fathername", e.target.value)
-                                }
-                            />
-                        </div>
-                        <div className={classNames("fatherOccupation")}>
-                            <InputLabel value="Father Occupation" />
-                            <TextInput
-                                className={classNames(
-                                    "p-1 rounded- w-full border-2 rounded-md"
-                                )}
-                                name="fatheroccupation"
-                                value={data.fatheroccupation}
-                                onChange={(e) =>
-                                    setData("fatheroccupation", e.target.value)
-                                }
-                            />
-                        </div>
+                            <InputLabel value="Qualification" />
 
-                        <div className={classNames("motherName")}>
-                            <InputLabel value="Mother name" />
-                            <TextInput
+                            <select
                                 className={classNames(
                                     "p-1 rounded- w-full border-2 rounded-md"
                                 )}
-                                name="mothername"
-                                value={data.mothername}
+                                name="qualification"
+                                value={data.qualification}
                                 onChange={(e) =>
-                                    setData("mothername", e.target.value)
+                                    setData("qualification", e.target.value)
                                 }
-                            />
-                        </div>
-                        <div className={classNames("motherOccupation")}>
-                            <InputLabel value="Mother Occupation" />
-                            <TextInput
-                                className={classNames(
-                                    "p-1 rounded- w-full border-2 rounded-md"
-                                )}
-                                name="motheroccupation"
-                                value={data.motheroccupation}
-                                onChange={(e) =>
-                                    setData("motheroccupation", e.target.value)
-                                }
-                            />
-                        </div>
-
-                        <div className={classNames("address")}>
-                            <InputLabel value="Address" />
-                            <TextInput
-                                className={classNames(
-                                    "p-1 rounded- w-full border-2 rounded-md"
-                                )}
-                                name="address"
-                                value={data.address}
-                                onChange={(e) =>
-                                    setData("address", e.target.value)
-                                }
-                            />
+                            >
+                                <option>Select Qualification</option>
+                                <option>Bachelor</option>
+                                <option>Master</option>
+                                <option>P.H.D</option>
+                            </select>
                         </div>
 
                         <div className={classNames("class")}>
-
-                        <InputLabel value="Class" />
+                            <InputLabel value="Class" />
                             <select
                                 className={classNames(
                                     "p-1 rounded- w-full border-2 rounded-md"
@@ -216,16 +197,16 @@ export default function Create() {
                                 }
                             >
                                 <option>Select Class</option>
-                                {/* {classes.map((classItem, index) => (
+                                {classes.map((classItem, index) => (
                                 <option key={index} value={classItem.id}>
                                     {classItem.grade}
                                 </option>
-                            ))} */}
+                            ))}
                             </select>
                         </div>
 
                         <div className={classNames("section")}>
-                        <InputLabel value="Section" />
+                            <InputLabel value="Section" />
                             <select
                                 className={classNames(
                                     "p-1 rounded- w-full border-2 rounded-md"
@@ -237,49 +218,49 @@ export default function Create() {
                                 }
                             >
                                 <option>Select Section</option>
-                                {/* {section.map((sectionItem, index) => (
+                                {section.map((sectionItem, index) => (
                                 <option value={sectionItem.id} key={index}>
                                     {sectionItem.sections}
                                 </option>
-                            ))} */}
+                            ))}
                             </select>
                         </div>
 
-                        <div className={classNames("role")}>
-                        <InputLabel value="Role" />
+                    
+                            <div className={classNames("role hidden")}>
+                                 <InputLabel value="User Role" />
+                                <TextInput
+                                type="text"
+                                    className={classNames(
+                                        "p-1 rounded- w-full border-2 rounded-md"
+                                    )}
+                                    name="user_role"
+                                    value={data.user_role}
+                                    onChange={(e) =>
+                                        setData("user_role", e.target.value)
+                                    }
+                                />
+                            </div>
+                     
+
+                        <div className={classNames("subject")}>
+                            <InputLabel value="Subject" />
                             <select
                                 className={classNames(
                                     "p-1 rounded- w-full border-2 rounded-md"
                                 )}
-                                name="role"
-                                value={data.role}
+                                name="subject"
+                                value={data.subject}
                                 onChange={(e) =>
-                                    setData("role", e.target.value)
+                                    setData("subject", e.target.value)
                                 }
                             >
-                                <option>Select Section</option>
-                                {/* {role.map((role, index) => (
-                                <option value={role.id} key={index}>
-                                    {role.role_name}
+                                <option>Select Subject</option>
+                                {subject.map((subjectItem, index) => (
+                                <option value={subjectItem.id} key={index}>
+                                    {subjectItem.subject}
                                 </option>
-                            ))} */}
-                            </select>
-                        </div>
-
-                        <div className={classNames("gender")}>
-                        <InputLabel value="Gender" />
-                            <select
-                                className={classNames(
-                                    "p-1 rounded- w-full border-2 rounded-md"
-                                )}
-                                name="gender"
-                                value={data.gender}
-                                onChange={(e) =>
-                                    setData("gender", e.target.value)
-                                }
-                            >
-                                <option>Select Section</option>
-                               
+                            ))}
                             </select>
                         </div>
                     </div>

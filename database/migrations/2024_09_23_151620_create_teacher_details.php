@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('qualification');
             $table->foreignId('class_id')->constrained('classrooms')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('section_id')->constrained('classroom_sections')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('subject_id')->constrained('subjects')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

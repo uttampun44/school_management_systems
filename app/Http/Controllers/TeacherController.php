@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class TeacherController extends Controller
@@ -24,13 +25,13 @@ class TeacherController extends Controller
     {
         $teachersDetails = Teacher::with([
             'class' => function ($query) {
-                return $query->select('id','grade');
+                return $query->select('id', 'grade');
             },
             'section' => function ($query) {
-                return $query->select('id','sections');
+                return $query->select('id', 'sections');
             },
             'subject' => function ($query) {
-                return $query->select('id','subject');
+                return $query->select('id', 'subject');
             }
         ])->select('id', 'full_name', 'phone_number', 'gender', 'date_of_birth', 'address', 'photo', 'qualification', 'class_id', 'section_id', 'subject_id')->paginate(10);
 
@@ -136,10 +137,19 @@ class TeacherController extends Controller
      */
     public function edit(Teacher $teacher)
     {
-        $teacher = User::find($teacher->user_id);
-     return Inertia::render('Teacher/Edit')->with([
-        'teacher' => $teacher
-     ]);
+        $user = User::find($teacher->user_id);
+// dd($teacher);
+        $class = ClassRoom::select('id', 'grade')->get();
+        $section = Section::select('id', 'sections')->get();
+        $subject = Subject::select('id', 'subject')->get();
+
+        return Inertia::render('Teacher/Edit')->with([
+            'teacher' => $teacher,
+            'classes' => $class,
+            'section' => $section,
+            'subject' => $subject,
+            'user' => $user
+        ]);
     }
 
     /**
@@ -147,7 +157,56 @@ class TeacherController extends Controller
      */
     public function update(Request $request, Teacher $teacher)
     {
-        //
+        DB::beginTransaction();
+        try {
+
+           
+            $user =  User::find($teacher->user_id);
+
+            if(!$user)
+            {
+               throw new \Exception("User Not Found");
+            }
+   
+            $user->name = $request->input('fullname');
+            $user->email = $request->input('email');
+    
+            if ($request->input('password')) {
+                $user->password = Hash::make($request->input('password'));
+            }
+            
+            $user->save();
+
+
+            $photo = $teacher->photo;
+
+            if ($request->hasFile('photo')) {
+
+                if (Storage::exists('public/' . $photo)) {
+                    Storage::delete('public/' . $photo);
+                }
+                $photo = $request->file('photo')->store('uploads/teachers', 'public');
+            }
+
+            $teacher->update([
+                'full_name' => $request->input('fullname'),
+                'phone_number' => $request->input('phonenumber'),
+                'gender' => $request->input('gender'),
+                'date_of_birth' => $request->input('date_of_birth'),
+                'address' => $request->input('address'),
+                'photo' => $photo,
+                'qualification' => $request->input('qualification'),
+                'class_id' => $request->input('class'),
+                'section_id' => $request->input('section'),
+                'subject_id' => $request->input('subject'),
+            ]);
+
+            DB::commit();
+            return redirect()->route('teacher.index');
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            DB::rollBack();
+        }
     }
 
     /**

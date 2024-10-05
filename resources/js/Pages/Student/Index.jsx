@@ -6,10 +6,13 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 export default function Index({ students }) {
    
+
     const handleDeleteStudent = (studentId) => {
         confirm("Are You confirm to delete !");
         router.delete(route("student.destroy", studentId));
     };
+
+    
     return (
         <Authenticated>
             <div
@@ -72,7 +75,7 @@ export default function Index({ students }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {students.map((student, index) => (
+                        {students.data.map((student, index) => (
                             <tr
                                 key={index}
                                 className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
@@ -86,18 +89,19 @@ export default function Index({ students }) {
                                 <td className="px-6 py-4">
                                     {student.full_name}
                                 </td>
-                              
-                                    <td className="px-6 py-4">
-                                        {student.user.email}
-                                    </td>
+
+                                <td className="px-6 py-4">
+                                    {student.user.email}
+                                </td>
+                                <td className="px-6 py-4">
                                     {student.phone_number}
-                              
+                                </td>
                                 <td className="px-6 py-4">
                                     {student.date_of_birth}
                                 </td>
                                 <td className="px-6 py-4">
                                     <img
-                                        src={`/storage/uploads/${student.photo}`}
+                                        src={`storage/uploads/student/${student.photo}`}
                                         className={classNames(
                                             "w-20 h-20 object-contain"
                                         )}
@@ -126,7 +130,6 @@ export default function Index({ students }) {
                                     <Link
                                         href={route("student.edit", student.id)}
                                     >
-                                        {" "}
                                         <EditNoteIcon
                                             style={{
                                                 fontSize: "30px",
@@ -152,6 +155,32 @@ export default function Index({ students }) {
                         ))}
                     </tbody>
                 </table>
+                <div className="flex gap-x-4 my-4 items-center mt-4">
+                    <div className={classNames("text-center")}>
+                        {students.prev_page_url && (
+                            <Link
+                                href={students.prev_page_url}
+                                className={classNames(
+                                    "bg-blue-700 text-lg font-semibold p-3 rounded-md text-white"
+                                )}
+                            >
+                                Previous Page
+                            </Link>
+                        )}
+                    </div>
+                    <div>
+                        {students.next_page_url && (
+                            <Link
+                                href={students.next_page_url}
+                                className={classNames(
+                                    "bg-green-700 text-lg font-semibold p-3 rounded-md text-white"
+                                )}
+                            >
+                                Next Page
+                            </Link>
+                        )}
+                    </div>
+                </div>
             </div>
         </Authenticated>
     );

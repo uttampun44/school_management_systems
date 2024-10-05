@@ -6,6 +6,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 export default function Index({ teacherdetails }) {
     
+    console.log(teacherdetails)
     
     const teachers = teacherdetails.data;
 
@@ -68,7 +69,7 @@ export default function Index({ teacherdetails }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {teachers.map((teacherItem, index) => (
+                        {teacherdetails.data.map((teacherItem, index) => (
                             <tr
                                 key={index}
                                 className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
@@ -165,6 +166,33 @@ export default function Index({ teacherdetails }) {
                         ))}
                     </tbody>
                 </table>
+
+                <div className="flex gap-x-4 my-4 items-center mt-4">
+                    <div className={classNames("text-center")}>
+                        {teacherdetails.prev_page_url && (
+                            <Link
+                                href={teacherdetails.prev_page_url}
+                                className={classNames(
+                                    "bg-blue-700 text-lg font-semibold p-3 rounded-md text-white"
+                                )}
+                            >
+                                Previous Page
+                            </Link>
+                        )}
+                    </div>
+                    <div>
+                        {teacherdetails.next_page_url && (
+                            <Link
+                                href={teacherdetails.next_page_url}
+                                className={classNames(
+                                    "bg-green-700 text-lg font-semibold p-3 rounded-md text-white"
+                                )}
+                            >
+                                Next Page
+                            </Link>
+                        )}
+                    </div>
+                </div>
             </div>
         </Authenticated>
     );

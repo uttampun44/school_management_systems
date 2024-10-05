@@ -37,7 +37,7 @@ class StudentController extends Controller
             'user' => function($query){
                 $query->select('id', 'email');
             }
-        ])->select('id','full_name', 'phone_number', 'date_of_birth', 'fathers_name', 'father_occupation', 'mothers_name', 'mother_occupation', 'address', 'classroom_id', 'section_id', 'user_id')->get();
+        ])->select('id','full_name', 'phone_number', 'date_of_birth', 'photo', 'fathers_name', 'father_occupation', 'mothers_name', 'mother_occupation', 'address', 'classroom_id', 'section_id', 'user_id')->paginate(15);
         
         return Inertia::render('Student/Index')->with('students', $students);
     }
@@ -143,6 +143,7 @@ class StudentController extends Controller
     {
         $user = User::find($student->user_id);
 
+
         $class = ClassRoom::select('id','grade')->get();
         $section = Section::select('id', 'sections')->get();
 
@@ -161,8 +162,8 @@ class StudentController extends Controller
     {
         DB::beginTransaction();
 
+        dd($request->all());
 
-        // dd($request->all());
        try {
         $request->validate([
             'fullname' => 'required|string|max:50',
@@ -199,9 +200,9 @@ class StudentController extends Controller
           if($request->hasFile('photo'))
           {
 
-            if(Storage::exists('public/' .$photo))
+            if(Storage::exists('public/uploads/teachers/' .$photo))
             {
-               Storage::delete('public/' .$photo);
+               Storage::delete('public/uploads/teachers/' .$photo);
             }
             $photo = $request->file('photo')->store('uploads/student', 'public');
           }

@@ -24,7 +24,7 @@ export default function Edit({user, teacher, classes, section, subject}){
         subject: "",
     });
   
-    console.log(data)
+
     const handleSubmit = (event) =>{
         event.preventDefault()
      update(route('teacher.update', teacher.id))

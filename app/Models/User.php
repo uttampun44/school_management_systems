@@ -53,7 +53,17 @@ class User extends Authenticatable
 
     public function hasRoles($roles)
     {
-        return $this->roles->contains("role_name", $roles);
+        return $this->roles()->whereIn("role_name", $roles)->exists();
+    }
+    
+    public function permissions():BelongsToMany
+    {
+        return $this->belongsToMany(Permission::class, 'permission_roles');
+    }
+
+    public function hasPermission($permission)
+    {
+        return $this->permissions->contain('permission_name', $permission);
     }
 
     public function student():HasOne

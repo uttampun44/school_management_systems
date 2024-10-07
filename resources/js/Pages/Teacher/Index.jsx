@@ -3,14 +3,16 @@ import { Link, useForm } from "@inertiajs/react";
 import classNames from "classnames";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import InputLabel from "@/Components/InputLabel";
+import TextInput from "@/Components/TextInput";
 
 export default function Index({ teacherdetails }) {
     
-    console.log(teacherdetails)
     
-    const teachers = teacherdetails.data;
 
-    const {delete:destroy} = useForm()
+    const {data, setData, delete:destroy} = useForm({
+        search: ''
+    })
 
    const handleDeleteTeacher = (teacherId) =>{
      destroy(route('teacher.delete', teacherId))
@@ -22,9 +24,15 @@ export default function Index({ teacherdetails }) {
                     "p-8 m-8 overflow-x-auto shadow-md sm:rounded-lg"
                 )}
             >
-                <div className="addStudent bg-blue-600 text-white text-lg font-medium py-2 px-4 rounded-md my-3 w-max">
+              <div className={classNames("row")}>
+               <div className="addStudent bg-blue-600 text-white text-lg font-medium py-2 px-4 rounded-md my-3 w-max">
                     <Link href={route("teacher.create")}>Add Teacher</Link>
                 </div>
+                <div className={classNames("search")}>
+                     <InputLabel value="Search" /> 
+                     <TextInput type="text" value={data.search} onChange={(e) => setData("search", e.target.value)} />
+                </div>
+              </div>
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>

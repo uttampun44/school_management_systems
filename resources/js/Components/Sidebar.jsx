@@ -135,15 +135,7 @@ export default function Sidebar(props) {
                                         `${isStudent ? "block" : "hidden"}`
                                     )}
                                 >
-                                    <li
-                                        className={cn(
-                                            "my-3 text-white font-semibold text-sm"
-                                        )}
-                                    >
-                                        <Link href={route("student.index")}>
-                                            Student
-                                        </Link>
-                                    </li>
+                                  
                                     <li
                                         className={cn(
                                             "my-3 text-white font-semibold text-sm"

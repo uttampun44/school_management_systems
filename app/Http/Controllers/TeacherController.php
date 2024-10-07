@@ -138,7 +138,7 @@ class TeacherController extends Controller
     public function edit(Teacher $teacher)
     {
         $user = User::find($teacher->user_id);
-// dd($teacher);
+
         $class = ClassRoom::select('id', 'grade')->get();
         $section = Section::select('id', 'sections')->get();
         $subject = Subject::select('id', 'subject')->get();
